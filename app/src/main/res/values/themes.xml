@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MyHSTU" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Define your app's base theme -->
+    <style name="Theme.MyHSTU" parent="android:Theme.Material.Light.NoActionBar">
+
+        <!-- Customize your theme here, e.g. text color, font, etc. -->
+    </style>
+
+    <!-- Splash screen theme for the app -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+
+        <!-- Set the splash screen icon (animated or static) -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/logo_foreground</item>
+
+        <!-- Set the duration of the splash screen animation (in milliseconds) -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- This defines the theme of the Activity that follows the splash screen -->
+        <item name="postSplashScreenTheme">@style/Theme.MyHSTU</item>
+    </style>
+
 </resources>

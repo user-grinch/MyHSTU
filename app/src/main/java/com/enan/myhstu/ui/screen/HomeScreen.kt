@@ -40,9 +40,9 @@ fun HomeScreenLayout(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.mipmap.logo_foreground),
             contentDescription = "HSTU Logo",
-            modifier = Modifier.size(175.dp, 300.dp),
+            modifier = Modifier.size(300.dp, 300.dp),
         )
     }
 
