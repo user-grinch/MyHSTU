@@ -1,7 +1,5 @@
-package com.enan.myhstu.screens
+package com.enan.myhstu.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,11 +10,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.enan.myhstu.NavHandler
 import com.enan.myhstu.UiViewModel
-import com.enan.myhstu.data.TabBarItem
 import com.enan.myhstu.data.tabBarItemsList
 
 @Composable
@@ -43,4 +40,10 @@ fun BottomBarLayout(navController: NavController, viewModel: UiViewModel) {
                 label = {Text(tabBarItem.title)})
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview() {
+    NavHandler()
 }

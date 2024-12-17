@@ -4,10 +4,10 @@ import androidx.annotation.DrawableRes
 import com.enan.myhstu.R
 
 val homePageItems = listOf (
-    CardItem("Hajee Mohammad Danesh", R.drawable.danesh),
-    CardItem("At a glance", R.drawable.glance),
+    CardItem("Chancellor & Vice Chancellors", R.drawable.chancellor),
+    CardItem("Proctor Office", R.drawable.proctor),
     CardItem("Notice Board", R.drawable.notice),
     CardItem("News & Events", R.drawable.news),
     CardItem("Bus Schedule", R.drawable.bus),
-    CardItem("Holidays", R.drawable.calender),
+    CardItem("Calender", R.drawable.calender),
 )
