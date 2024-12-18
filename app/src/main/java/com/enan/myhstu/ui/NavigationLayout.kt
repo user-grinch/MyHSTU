@@ -13,27 +13,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.enan.myhstu.NavHandler
-import com.enan.myhstu.UiViewModel
+import com.enan.myhstu.data.NavBarData
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.tabBarItemsList
 
 @Composable
-fun BottomBarLayout(navController: NavController, viewModel: UiViewModel) {
-    val seelctedTab by viewModel.selectedTab.collectAsState()
-    var selectedTabIndex by rememberSaveable {
-        mutableStateOf(seelctedTab.id)
-    }
-
+fun NavigationLayout(navController: NavController, viewModel: UiViewModel) {
+    val currentRoute = navController.currentBackStackEntryFlow.collectAsState(initial = null).value?.destination?.route ?: NavBarData.home.title
     NavigationBar {
         tabBarItemsList.forEachIndexed { index, tabBarItem ->
             NavigationBarItem(
-                selected = selectedTabIndex == index,
+                selected = currentRoute == tabBarItem.title,
                 onClick = {
-                    selectedTabIndex = index
                     navController.navigate(tabBarItem.title)
                 },
                 icon = {
                     Icon(
-                        imageVector = if (selectedTabIndex == index) {tabBarItem.selectedIcon} else {tabBarItem.unselectedIcon},
+                        imageVector = if (currentRoute == tabBarItem.title) {tabBarItem.selectedIcon} else {tabBarItem.unselectedIcon},
                         contentDescription = tabBarItem.title,
                     )
                 },

@@ -1,28 +1,42 @@
-package com.enan.myhstu
+package com.enan.myhstu.data
 
 import androidx.lifecycle.ViewModel
-import com.enan.myhstu.data.SearchInfo
-import com.enan.myhstu.data.NavBarItem
-import com.enan.myhstu.data.NavBarItems
-import com.enan.myhstu.data.ProfileData
-import com.enan.myhstu.data.personnelList
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class UiViewModel : ViewModel() {
-    private val _selectedTab = MutableStateFlow(NavBarItems.settings)
-    val selectedTab: StateFlow<NavBarItem> = _selectedTab.asStateFlow()
+//    private val _selectedTab = MutableStateFlow(NavBarData.settings)
+//    val selectedTab: StateFlow<NavBarItem> = _selectedTab.asStateFlow()
 
-    private val _searchInfo = MutableStateFlow(SearchInfo())
-    val searchInfo: StateFlow<SearchInfo> = _searchInfo.asStateFlow()
+    private val _searchInfo = MutableStateFlow(SearchData())
+    val searchInfo: StateFlow<SearchData> = _searchInfo.asStateFlow()
 
-    fun setSelectedTab(tab: NavBarItem) {
-        _selectedTab.update { tab }
+    private val _webViewInfo = MutableStateFlow(WebViewData())
+    val webViewInfo: StateFlow<WebViewData> = _webViewInfo.asStateFlow()
+
+    fun setWebView(url: String, title: String) {
+        _webViewInfo.update {
+            it.copy (
+                url = url,
+                title = title,
+                show = true,
+            )
+        }
     }
 
-    fun setSearchInfo(info: SearchInfo) {
+    fun closeWebView() {
+        _webViewInfo.update {
+            it.copy (
+                show = false,
+            )
+        }
+    }
+
+    fun setSearchInfo(info: SearchData) {
         _searchInfo.update { info }
     }
 

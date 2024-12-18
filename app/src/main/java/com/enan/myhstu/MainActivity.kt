@@ -15,14 +15,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.enan.myhstu.data.NavBarItems
-import com.enan.myhstu.ui.BottomBarLayout
+import com.enan.myhstu.data.NavBarData
+import com.enan.myhstu.ui.NavigationLayout
 import com.enan.myhstu.ui.screen.HomeScreenLayout
-import com.enan.myhstu.ui.TopBarLayout
+import com.enan.myhstu.ui.HeaderLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.ui.screen.AcademicScreenLayout
 import com.enan.myhstu.ui.screen.DirectoryScreenLayout
 import com.enan.myhstu.ui.screen.SettingScreenLayout
+import com.enan.myhstu.ui.screen.WebViewScreenLayout
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,41 +40,47 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavHandler(viewModel: UiViewModel = viewModel()) {
     val navController = rememberNavController()
-    val selectedTab by viewModel.selectedTab.collectAsState()
     CoreTheme {
+        val webViewInfo by viewModel.webViewInfo.collectAsState()
         Scaffold(
-            topBar = { TopBarLayout(viewModel = viewModel) },
+            topBar = { if (!webViewInfo.show) HeaderLayout(viewModel = viewModel, navController = navController) },
             bottomBar = {
-                BottomBarLayout(viewModel = viewModel, navController = navController)
+                if (!webViewInfo.show) NavigationLayout(viewModel = viewModel, navController = navController)
             }
         ) { innerPadding ->
-            NavHost(navController = navController, startDestination = selectedTab.title) {
-                composable(NavBarItems.home.title) {
-                    HomeScreenLayout(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    viewModel.setSelectedTab(NavBarItems.home)
-                }
-                composable(NavBarItems.directory.title) {
-                    DirectoryScreenLayout(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = viewModel
-                    )
-                    viewModel.setSelectedTab(NavBarItems.directory)
-                }
-                composable(NavBarItems.academics.title) {
-                    AcademicScreenLayout(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = viewModel
-                    )
-                    viewModel.setSelectedTab(NavBarItems.academics)
-                }
-                composable(NavBarItems.settings.title) {
-                    SettingScreenLayout(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = viewModel
-                    )
-                    viewModel.setSelectedTab(NavBarItems.settings)
+            if (webViewInfo.show) {
+                WebViewScreenLayout(
+                    modifier = Modifier.padding(innerPadding),
+                    viewModel = viewModel,
+                    navController = navController,
+                    title =  webViewInfo.title,
+                )
+            } else {
+                NavHost(navController = navController, startDestination = NavBarData.home.title) {
+                    composable(NavBarData.home.title) {
+                        HomeScreenLayout(
+                            modifier = Modifier.padding(innerPadding),
+                            viewModel = viewModel
+                        )
+                    }
+                    composable(NavBarData.directory.title) {
+                        DirectoryScreenLayout(
+                            modifier = Modifier.padding(innerPadding),
+                            viewModel = viewModel
+                        )
+                    }
+                    composable(NavBarData.academics.title) {
+                        AcademicScreenLayout(
+                            modifier = Modifier.padding(innerPadding),
+                            viewModel = viewModel
+                        )
+                    }
+                    composable(NavBarData.settings.title) {
+                        SettingScreenLayout(
+                            modifier = Modifier.padding(innerPadding),
+                            viewModel = viewModel
+                        )
+                    }
                 }
             }
         }

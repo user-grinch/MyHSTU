@@ -12,22 +12,21 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class NavBarItem(
-    val id: Int,
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
 )
 
-object NavBarItems {
-    val home = NavBarItem(id = 0, title = "Home", selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home)
-    val directory = NavBarItem(id = 1, title = "Directory", selectedIcon = Icons.Filled.Person, unselectedIcon = Icons.Outlined.Person)
-    val academics = NavBarItem(id = 2, title = "Academics", selectedIcon = Icons.Filled.DateRange, unselectedIcon = Icons.Outlined.DateRange)
-    val settings = NavBarItem(id = 3, title = "Settings", selectedIcon = Icons.Filled.Settings, unselectedIcon = Icons.Outlined.Settings)
+object NavBarData {
+    val home = NavBarItem(title = "Home", selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home)
+    val directory = NavBarItem(title = "Directory", selectedIcon = Icons.Filled.Person, unselectedIcon = Icons.Outlined.Person)
+    val academics = NavBarItem(title = "Academics", selectedIcon = Icons.Filled.DateRange, unselectedIcon = Icons.Outlined.DateRange)
+    val settings = NavBarItem(title = "Settings", selectedIcon = Icons.Filled.Settings, unselectedIcon = Icons.Outlined.Settings)
 }
 
 val tabBarItemsList = listOf (
-    NavBarItems.home,
-    NavBarItems.directory,
-    NavBarItems.academics,
-    NavBarItems.settings,
+    NavBarData.home,
+    NavBarData.directory,
+    NavBarData.academics,
+    NavBarData.settings,
 )

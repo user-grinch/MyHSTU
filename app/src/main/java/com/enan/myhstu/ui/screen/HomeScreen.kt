@@ -26,14 +26,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.R
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.homePageItems
 import com.enan.myhstu.ui.CardLayout
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenLayout(modifier: Modifier = Modifier) {
+fun HomeScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
     val GRID_SPACING: Int = 13
     Row (
         modifier = modifier.fillMaxWidth(),
@@ -60,7 +62,7 @@ fun HomeScreenLayout(modifier: Modifier = Modifier) {
         ) {
             FilterChip(
                 selected = false,
-                onClick = { },
+                onClick = { viewModel.setWebView("google.com", title = "Overview") },
                 label = { Text("Overview") },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)

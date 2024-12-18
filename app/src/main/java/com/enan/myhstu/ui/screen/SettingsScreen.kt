@@ -1,6 +1,5 @@
 package com.enan.myhstu.ui.screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -8,12 +7,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.tooling.preview.Preview
 import com.enan.myhstu.NavHandler
-import com.enan.myhstu.UiViewModel
+import com.enan.myhstu.data.UiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,43 +75,30 @@ fun SettingScreenLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
         )
 
 
-        // Visit HSTU Website
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { /* Add action to open HSTU website */ }
-                .padding(vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(
-                imageVector = Icons.Default.Home,
-                contentDescription = "Visit HSTU Website",
-                modifier = Modifier.size(24.dp)
+            // Visit HSTU Website
+            Button(
+                onClick = { },
+                content = {
+                    Text(
+                        text = "HSTU Website",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Visit HSTU Website",
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
 
-        // Contact Us Section
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { /* Add action to open Contact Us */ }
-                .padding(vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Email,
-                contentDescription = "Contact Us",
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Contact Us",
-                style = MaterialTheme.typography.bodyLarge
+            // Contact Us Section
+            Button(
+                onClick = { },
+                content = {
+                    Text(
+                        text = "Source Code",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             )
         }
 

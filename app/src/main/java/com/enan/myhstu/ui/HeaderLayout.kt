@@ -14,13 +14,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.enan.myhstu.UiViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.getTextColor
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
+fun HeaderLayout(modifier: Modifier = Modifier, viewModel: UiViewModel, navController: NavController) {
     CenterAlignedTopAppBar(
         title = {
             Box (
@@ -29,9 +32,9 @@ fun TopBarLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
                     .padding(15.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                val selectedTab by viewModel.selectedTab.collectAsState()
+                val currentTab = navController.currentBackStackEntryAsState()?.value?.destination?.route
                 Text(
-                    text = if (selectedTab.id == 0) "MyHSTU" else selectedTab.title,
+                    text = currentTab?: "MyHSTU",
                     style = MaterialTheme.typography.displayLarge,
                     color = getTextColor()
                 )

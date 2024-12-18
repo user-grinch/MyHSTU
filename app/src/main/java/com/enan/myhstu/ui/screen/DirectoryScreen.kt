@@ -22,8 +22,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -36,8 +34,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.enan.myhstu.NavHandler
-import com.enan.myhstu.UiViewModel
-import com.enan.myhstu.data.SearchInfo
+import com.enan.myhstu.data.UiViewModel
+import com.enan.myhstu.data.SearchData
 import com.enan.myhstu.ui.ProfileCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +52,7 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            
+
             // SearchBox
             Box(
                 modifier = Modifier
@@ -66,7 +64,7 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
             ) {
                 TextField(
                     value = searchInfo.query,
-                    onValueChange = { viewModel.setSearchInfo(SearchInfo(searchInfo.show, it)) },
+                    onValueChange = { viewModel.setSearchInfo(SearchData(searchInfo.show, it)) },
                     placeholder = {
                         Text(
                             text = "Search...",
