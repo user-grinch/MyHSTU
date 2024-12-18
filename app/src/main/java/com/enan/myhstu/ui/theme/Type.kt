@@ -32,7 +32,7 @@ val Typography = Typography(
     displaySmall = TextStyle(
         fontFamily = Josefin,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp
+        fontSize = 14.sp
     ),
     labelSmall = TextStyle(
         fontFamily = Roboto,

@@ -68,16 +68,6 @@ fun HomeScreenLayout(modifier: Modifier = Modifier) {
                 border = null,
                 modifier = Modifier.padding(horizontal = 4.dp)
             )
-            FilterChip(
-                selected = false,
-                onClick = { },
-                label = { Text("Student Portal") },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                ),
-                border = null,
-                modifier = Modifier.padding(horizontal = 4.dp)
-            )
         }
 
         // Spacer takes the remaining space

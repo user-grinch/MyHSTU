@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,6 +22,7 @@ import com.enan.myhstu.ui.TopBarLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enan.myhstu.ui.screen.AcademicScreenLayout
 import com.enan.myhstu.ui.screen.DirectoryScreenLayout
+import com.enan.myhstu.ui.screen.SettingScreenLayout
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +66,13 @@ fun NavHandler(viewModel: UiViewModel = viewModel()) {
                         viewModel = viewModel
                     )
                     viewModel.setSelectedTab(NavBarItems.academics)
+                }
+                composable(NavBarItems.settings.title) {
+                    SettingScreenLayout(
+                        modifier = Modifier.padding(innerPadding),
+                        viewModel = viewModel
+                    )
+                    viewModel.setSelectedTab(NavBarItems.settings)
                 }
             }
         }

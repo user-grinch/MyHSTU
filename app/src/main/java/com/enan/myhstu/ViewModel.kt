@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class UiViewModel : ViewModel() {
-    private val _selectedTab = MutableStateFlow(NavBarItems.home)
+    private val _selectedTab = MutableStateFlow(NavBarItems.settings)
     val selectedTab: StateFlow<NavBarItem> = _selectedTab.asStateFlow()
 
     private val _searchInfo = MutableStateFlow(SearchInfo())
