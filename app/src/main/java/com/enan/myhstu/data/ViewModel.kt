@@ -9,31 +9,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class UiViewModel : ViewModel() {
-//    private val _selectedTab = MutableStateFlow(NavBarData.settings)
-//    val selectedTab: StateFlow<NavBarItem> = _selectedTab.asStateFlow()
-
     private val _searchInfo = MutableStateFlow(SearchData())
     val searchInfo: StateFlow<SearchData> = _searchInfo.asStateFlow()
 
     private val _webViewInfo = MutableStateFlow(WebViewData())
     val webViewInfo: StateFlow<WebViewData> = _webViewInfo.asStateFlow()
 
-    fun setWebView(url: String, title: String) {
+    fun setWebView(webViewData: WebViewData, navController: NavController) {
         _webViewInfo.update {
             it.copy (
-                url = url,
-                title = title,
-                show = true,
+                url = webViewData.url,
+                title = webViewData.title,
             )
         }
-    }
-
-    fun closeWebView() {
-        _webViewInfo.update {
-            it.copy (
-                show = false,
-            )
-        }
+        navController.navigate(NavBarData.webview.title)
     }
 
     fun setSearchInfo(info: SearchData) {

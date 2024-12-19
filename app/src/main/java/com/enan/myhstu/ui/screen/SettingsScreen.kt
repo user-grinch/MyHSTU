@@ -8,12 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.data.UiViewModel
+import com.enan.myhstu.data.webViewList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreenLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
+fun SettingScreenLayout(modifier: Modifier = Modifier,
+                        viewModel: UiViewModel,
+                        navController: NavController
+) {
     // State for toggles
     var useMaterialColors by remember { mutableStateOf(true) }
     var useDefaultBrowser by remember { mutableStateOf(false) }
@@ -81,7 +86,9 @@ fun SettingScreenLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
         ) {
             // Visit HSTU Website
             Button(
-                onClick = { },
+                onClick = {
+                    viewModel.setWebView(webViewList.hstuWebsite, navController)
+                },
                 content = {
                     Text(
                         text = "HSTU Website",
@@ -92,7 +99,9 @@ fun SettingScreenLayout(modifier: Modifier = Modifier, viewModel: UiViewModel) {
 
             // Contact Us Section
             Button(
-                onClick = { },
+                onClick = {
+                    viewModel.setWebView(webViewList.sourceCode, navController)
+                },
                 content = {
                     Text(
                         text = "Source Code",

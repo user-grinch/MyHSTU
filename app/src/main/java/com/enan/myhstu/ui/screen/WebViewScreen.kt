@@ -30,47 +30,13 @@ import com.enan.myhstu.data.UiViewModel
 fun WebViewScreenLayout(
     modifier: Modifier = Modifier,
     viewModel: UiViewModel = viewModel(),
-    title: String,
-    navController: NavController,
+    navController: NavController
 ) {
     val webViewInfo by viewModel.webViewInfo.collectAsState()
     val context = LocalContext.current
     val webView = remember { WebView(context) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = "$title     MyHSTU",
-                    style = MaterialTheme.typography.displayMedium
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = {
-                        if (webView.canGoBack()) {
-                            webView.goBack()
-                        } else {
-                            viewModel.closeWebView();
-                        }
-                    }
-                ) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                }
-            },
-            actions = {
-                IconButton(onClick = { webView.loadUrl(webViewInfo.url) }) {
-                    Icon(Icons.Default.Home, contentDescription = "Home")
-                }
-                IconButton(onClick = { webView.reload() }) {
-                    Icon(Icons.Default.Refresh, contentDescription = "Refresh")
-                }
-                IconButton(onClick = { viewModel.closeWebView(); }) {
-                    Icon(Icons.Default.Close, contentDescription = "Close")
-                }
-            }
-        )
-
+    Column(modifier = modifier.fillMaxSize()) {
         // WebView content
         AndroidView(
             factory = {
@@ -87,12 +53,26 @@ fun WebViewScreenLayout(
         )
     }
 
+    TopAppBar(
+        title = {
+            Text(
+                text = webViewInfo.title,
+                style = MaterialTheme.typography.displayLarge
+            )
+        },
+        actions = {
+            IconButton(onClick = { webView.reload() }) {
+                Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+            }
+        }
+    )
+
     // Handle system back button gesture for navigation
     BackHandler {
         if (webView.canGoBack()) {
             webView.goBack()
         } else {
-            viewModel.closeWebView();
+            navController.popBackStack()
         }
     }
 }

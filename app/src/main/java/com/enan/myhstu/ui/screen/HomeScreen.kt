@@ -27,15 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.R
+import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.homePageItems
 import com.enan.myhstu.ui.CardLayout
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
+fun HomeScreenLayout(viewModel: UiViewModel, navController: NavController, modifier: Modifier = Modifier) {
     val GRID_SPACING: Int = 13
     Row (
         modifier = modifier.fillMaxWidth(),
@@ -62,7 +64,7 @@ fun HomeScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
         ) {
             FilterChip(
                 selected = false,
-                onClick = { viewModel.setWebView("google.com", title = "Overview") },
+                onClick = { navController.navigate(NavBarData.overview.title) },
                 label = { Text("Overview") },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -83,7 +85,10 @@ fun HomeScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(GRID_SPACING.dp)
         ) {
             items(homePageItems) { item ->
-                CardLayout(item = item)
+                CardLayout(item = item,
+                    viewModel = viewModel,
+                    navController = navController
+                )
             }
         }
     }

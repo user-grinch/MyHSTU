@@ -2,6 +2,7 @@ package com.enan.myhstu.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +38,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.enan.myhstu.data.CardItem
 import com.enan.myhstu.data.ProfileData
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.personnelList
 import com.enan.myhstu.getTextColor
 
 @Composable
-fun CardLayout(modifier: Modifier = Modifier, item: CardItem) {
+fun CardLayout(modifier: Modifier = Modifier,
+               item: CardItem,
+               viewModel: UiViewModel,
+               navController: NavController) {
     val cardWidthFraction = 0.50f
     val cardHeight = 110.dp
     val cardCornerRadius = 10.dp
@@ -55,7 +62,10 @@ fun CardLayout(modifier: Modifier = Modifier, item: CardItem) {
     Card(
         modifier = modifier
             .fillMaxWidth(cardWidthFraction)
-            .height(cardHeight),
+            .height(cardHeight)
+            .clickable {
+                       item.func?.invoke(viewModel, navController)
+            },
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.background),
         elevation = CardDefaults.elevatedCardElevation(cardElevation),
         shape = RoundedCornerShape(cardCornerRadius),
@@ -91,7 +101,7 @@ fun ProfileCard(teacher: ProfileData) {
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(6.dp)
+        elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
