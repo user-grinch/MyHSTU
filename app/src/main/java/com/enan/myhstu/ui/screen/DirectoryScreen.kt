@@ -44,7 +44,7 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
     val searchInfo by viewModel.searchInfo.collectAsState()
     val selectedCategories = searchInfo.selectedCategories
     val filteredTeachers = viewModel.getFilteredTeacherList()
-    val categories = viewModel.getFilterList()
+    val categories by viewModel.categories.collectAsState()
 
     Box(
         modifier = modifier

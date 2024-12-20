@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,7 +23,9 @@ import com.enan.myhstu.ui.HeaderLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.room.Database
 import com.enan.myhstu.data.UiViewModel
+import com.enan.myhstu.database.AppDatabase
 import com.enan.myhstu.ui.screen.AcademicScreenLayout
 import com.enan.myhstu.ui.screen.DirectoryScreenLayout
 import com.enan.myhstu.ui.screen.OverviewScreenLayout
@@ -35,7 +38,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NavHandler()
+            val appDB = AppDatabase.getDatabase(LocalContext.current)
+            val viewModel = UiViewModel(appDB.teacherDao(), appDB.facultyDao(), appDB.departmentDAO())
+            NavHandler(viewModel)
         }
     }
 }

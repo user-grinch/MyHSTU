@@ -1,5 +1,7 @@
 package com.enan.myhstu.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -176,17 +179,36 @@ fun ProfileCard(teacher: ProfileData) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                TextButton(onClick = { /* Call Action */ }) {
+                val context = LocalContext.current
+
+                TextButton(onClick = {
+                    val callIntent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${teacher.phone}")
+                    }
+                    context.startActivity(callIntent)
+                }) {
                     Icon(Icons.Default.Call, contentDescription = "Call", tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("Call")
                 }
-                TextButton(onClick = { /* Mail Action */ }) {
+
+                TextButton(onClick = {
+                    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:${teacher.email}")
+                    }
+                    context.startActivity(emailIntent)
+                }) {
                     Icon(Icons.Default.Email, contentDescription = "Mail", tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("Mail")
                 }
-                TextButton(onClick = { /* WhatsApp Action */ }) {
+
+                TextButton(onClick = {
+                    val whatsappIntent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse("https://wa.me/${teacher.phone}")
+                    }
+                    context.startActivity(whatsappIntent)
+                }) {
                     Icon(Icons.Default.AccountBox, contentDescription = "WhatsApp", tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("WhatsApp")
