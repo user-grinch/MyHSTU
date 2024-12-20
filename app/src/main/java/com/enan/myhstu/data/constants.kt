@@ -1,6 +1,5 @@
 package com.enan.myhstu.data
 
-const val APP_VERSION = "1.1.0"
 const val OFFICE_FACULTY_ID = 10;
 const val HALL_FACULTY_ID = 13;
 const val PROCTOR_FACULTY_ID = 14;

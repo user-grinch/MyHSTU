@@ -15,17 +15,18 @@ val academicItems = listOf (
     CardItem("Exam Result", R.drawable.result) { viewModel, navController ->
         viewModel.setWebView(webViewList.examResult, navController)
     },
-    CardItem("International Students", R.drawable.international) { viewModel, navController ->
-        viewModel.setWebView(webViewList.internationalStudents, navController)
+    CardItem("Academic Council", R.drawable.book) { viewModel, navController ->
+        viewModel.setWebView(webViewList.academicCouncil, navController)
     },
+
     CardItem("Calender", R.drawable.calender) { viewModel, navController ->
         viewModel.setWebView(webViewList.calender, navController)
     },
 )
 
 val miscItems = listOf (
-    CardItem("Academic Council", R.drawable.book) { viewModel, navController ->
-        viewModel.setWebView(webViewList.academicCouncil, navController)
+    CardItem("International Students", R.drawable.international) { viewModel, navController ->
+        viewModel.setWebView(webViewList.internationalStudents, navController)
     },
     CardItem("IT Cell", R.drawable.it_cell) { viewModel, navController ->
         navController.navigate(NavBarData.directory.title)

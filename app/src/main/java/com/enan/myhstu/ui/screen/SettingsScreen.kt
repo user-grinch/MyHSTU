@@ -5,13 +5,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
-import com.enan.myhstu.data.APP_VERSION
 import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.webViewList
@@ -104,8 +104,9 @@ fun SettingScreenLayout(modifier: Modifier = Modifier,
 
         Spacer(modifier = Modifier.weight(0.1f))
 
+        val ver = LocalContext.current.packageManager.getPackageInfo(LocalContext.current.packageName, 0).versionName
         Text(
-            text = "Version: ${APP_VERSION}",
+            text = "Version: $ver",
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center

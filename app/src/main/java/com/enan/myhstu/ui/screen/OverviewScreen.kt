@@ -2,6 +2,7 @@ package com.enan.myhstu.ui.screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -55,6 +58,7 @@ import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.R
 import com.enan.myhstu.data.UiViewModel
+import com.enan.myhstu.data.faculties
 import com.enan.myhstu.data.homePageItems
 import com.enan.myhstu.data.webViewList
 import com.enan.myhstu.ui.CardLayout
@@ -73,7 +77,9 @@ fun SectionHeader(title: String) {
 
 @Composable
 fun BulletList(items: List<String>) {
-    Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp)) {
         items.forEach { item ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -124,7 +130,8 @@ fun OverviewScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) 
         var isExpanded by remember { mutableStateOf(false) }
 
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(vertical = 12.dp),
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -160,7 +167,8 @@ fun OverviewScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) 
         }
 
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(vertical = 12.dp),
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -186,13 +194,49 @@ fun OverviewScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) 
             )
         )
 
-        // Faculties Section
-        SectionHeader(title = "Faculties")
-        BulletList(items = listOf(
-            "Agriculture", "Computer Science & Engineering", "Business Studies", "Engineering",
-            "Fisheries", "Veterinary & Animal Science", "Science", "Social Science & Humanities",
-            "Post Graduate Studies"
-        ))
+        val expandedFaculties = remember {
+            mutableStateOf(setOf<String>())
+        }
+
+        Column {
+            SectionHeader(title = "Faculties")
+            faculties.forEach { faculty ->
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val current = expandedFaculties.value.toMutableSet()
+                                if (current.contains(faculty.name)) {
+                                    current.remove(faculty.name)
+                                } else {
+                                    current.add(faculty.name)
+                                }
+                                expandedFaculties.value = current
+                            }
+                            .padding(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = if (expandedFaculties.value.contains(faculty.name)) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 10.dp)
+                        )
+                        Text(text = faculty.name, style = MaterialTheme.typography.displayMedium)
+                    }
+
+                    if (expandedFaculties.value.contains(faculty.name)) {
+                        Column(modifier = Modifier.padding(start = 16.dp)) {
+                            faculty.departments.forEach { department ->
+                                Text(text = "       >   $department", style = MaterialTheme.typography.labelSmall,
+                                    modifier = Modifier.padding(6.dp))
+                            }
+                        }
+                        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+                    }
+                }
+            }
+        }
 
         // Degree Programs Section
         SectionHeader(title = "Degree Programs")
