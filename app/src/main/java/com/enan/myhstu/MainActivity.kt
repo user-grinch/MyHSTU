@@ -22,6 +22,7 @@ import com.enan.myhstu.ui.screen.HomeScreenLayout
 import com.enan.myhstu.ui.HeaderLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.room.Database
 import com.enan.myhstu.data.UiViewModel
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun NavHandler(viewModel: UiViewModel = viewModel()) {
+fun NavHandler(viewModel: UiViewModel = viewModel(), startDestination: String = NavBarData.home.title) {
     val navController = rememberNavController()
     CoreTheme {
         val webViewInfo by viewModel.webViewInfo.collectAsState()
@@ -64,7 +65,7 @@ fun NavHandler(viewModel: UiViewModel = viewModel()) {
                 NavigationLayout(viewModel = viewModel, navController = navController)
             }
         ) { innerPadding ->
-            NavHost(navController = navController, startDestination = NavBarData.home.title) {
+            NavHost(navController = navController, startDestination = startDestination) {
                 composable(NavBarData.home.title) {
                     HomeScreenLayout(
                         modifier = Modifier.padding(innerPadding),

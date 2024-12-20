@@ -9,7 +9,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
+import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.webViewList
 
@@ -84,29 +86,17 @@ fun SettingScreenLayout(modifier: Modifier = Modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Visit HSTU Website
-            Button(
+            CustomFilterChip(
+                label = "HSTU Website",
                 onClick = {
                     viewModel.setWebView(webViewList.hstuWebsite, navController)
-                },
-                content = {
-                    Text(
-                        text = "HSTU Website",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
                 }
             )
 
-            // Contact Us Section
-            Button(
+            CustomFilterChip(
+                label = "Source Code",
                 onClick = {
                     viewModel.setWebView(webViewList.sourceCode, navController)
-                },
-                content = {
-                    Text(
-                        text = "Source Code",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
                 }
             )
         }

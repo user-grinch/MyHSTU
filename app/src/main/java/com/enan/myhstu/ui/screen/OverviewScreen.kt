@@ -51,10 +51,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.R
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.homePageItems
+import com.enan.myhstu.data.webViewList
 import com.enan.myhstu.ui.CardLayout
 import com.google.android.gms.maps.model.Circle
 
@@ -150,12 +152,10 @@ fun OverviewScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) 
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Button(
+                CustomFilterChip(
+                    label = if (isExpanded) "Read Less" else "Read More",
                     onClick = { isExpanded = !isExpanded },
-                    modifier = Modifier.padding(0.dp)
-                ) {
-                    Text(text = if (isExpanded) "Read Less" else "Read More")
-                }
+                )
             }
         }
 

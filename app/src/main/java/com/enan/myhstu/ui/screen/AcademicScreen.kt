@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -19,14 +21,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.academicPageItems
 import com.enan.myhstu.data.webViewList
+import com.enan.myhstu.database.AppDatabase
 import com.enan.myhstu.ui.CardLayout
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,51 +39,60 @@ import com.enan.myhstu.ui.CardLayout
 fun AcademicScreenLayout(modifier: Modifier = Modifier,
                          viewModel: UiViewModel,
                          navController: NavController) {
-    val LOGO_SIZE: Int = 200
     val GRID_SPACING: Int = 13
 
-    Column (
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(GRID_SPACING.dp * 2),
+            .padding(GRID_SPACING.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Row for Filter Chips
-        Row {
-            FilterChip(
-                selected = false,
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            ) {
+            CustomFilterChip(
+                label = "Regent Board",
                 onClick = {
                     viewModel.setWebView(webViewList.regentBoard, navController)
-                },
-                label = { Text("Regent Board") },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                ),
-                border = null,
-                modifier = Modifier.padding(horizontal = 4.dp)
+                }
             )
-            FilterChip(
-                selected = false,
+            CustomFilterChip(
+                label = "Academic Council",
                 onClick = {
-                          viewModel.setWebView(webViewList.academicCouncil, navController)
-                },
-                label = { Text("Academic Council") },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-                ),
-                border = null,
-                modifier = Modifier.padding(horizontal = 4.dp)
+                    viewModel.setWebView(webViewList.academicCouncil, navController)
+                }
             )
         }
-        Spacer(modifier = Modifier.padding(15.dp))
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
+
+        Spacer(modifier = Modifier.padding(bottom = GRID_SPACING.dp))
+        Column(
             verticalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+                .padding(bottom = GRID_SPACING.dp)
         ) {
-            items(academicPageItems) { item ->
-                CardLayout(item = item, viewModel = viewModel, navController = navController)
+            academicPageItems.chunked(2).forEach { rowItems ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
+                ) {
+                    rowItems.forEach { item ->
+                        CardLayout(
+                            item = item,
+                            viewModel = viewModel,
+                            navController = navController,
+                            modifier = Modifier
+                                .weight(1f, fill = true)
+                                .fillMaxWidth()
+                        )
+                    }
+                    if (rowItems.size < 2) {
+                        Spacer(modifier = Modifier.weight(1f, fill = true))
+                    }
+                }
             }
         }
     }
@@ -87,6 +101,8 @@ fun AcademicScreenLayout(modifier: Modifier = Modifier,
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    NavHandler()
+    val appDB = AppDatabase.getDatabase(LocalContext.current)
+    val viewModel = UiViewModel(appDB.teacherDao(), appDB.facultyDao(), appDB.departmentDAO())
+    NavHandler(viewModel = viewModel, startDestination = NavBarData.academics.title)
 }
 
