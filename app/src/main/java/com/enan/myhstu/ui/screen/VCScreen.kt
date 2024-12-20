@@ -2,6 +2,7 @@ package com.enan.myhstu.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.data.VCItem
 import com.enan.myhstu.data.presidentItem
@@ -61,6 +63,7 @@ fun VCScreenLayout(
 
 @Composable
 fun VCProfileCard(item: VCItem) {
+    var fullscrenMode by remember { mutableStateOf(false) }
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         modifier = Modifier
@@ -79,6 +82,7 @@ fun VCProfileCard(item: VCItem) {
                         .size(72.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
+                        .clickable { fullscrenMode = true }
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -102,6 +106,20 @@ fun VCProfileCard(item: VCItem) {
                     )
                 }
             }
+        }
+    }
+
+    if (fullscrenMode) {
+        Dialog(onDismissRequest = { fullscrenMode = false }) {
+            Image(
+                painter = painterResource(id = item.picture),
+                contentDescription = "Full Screen Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(300.dp)
+                    .clip(CircleShape)
+                    .clickable { fullscrenMode = false }
+            )
         }
     }
 }

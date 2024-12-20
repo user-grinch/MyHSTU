@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
+import com.enan.myhstu.data.APP_VERSION
 import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.webViewList
@@ -104,7 +105,7 @@ fun SettingScreenLayout(modifier: Modifier = Modifier,
         Spacer(modifier = Modifier.weight(0.1f))
 
         Text(
-            text = "Version: 1.0.0",
+            text = "Version: ${APP_VERSION}",
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center

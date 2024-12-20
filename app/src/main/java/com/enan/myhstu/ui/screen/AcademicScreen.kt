@@ -1,21 +1,15 @@
 package com.enan.myhstu.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,10 +23,11 @@ import com.enan.myhstu.CustomFilterChip
 import com.enan.myhstu.NavHandler
 import com.enan.myhstu.data.NavBarData
 import com.enan.myhstu.data.UiViewModel
-import com.enan.myhstu.data.academicPageItems
+import com.enan.myhstu.data.academicItems
+import com.enan.myhstu.data.miscItems
 import com.enan.myhstu.data.webViewList
 import com.enan.myhstu.database.AppDatabase
-import com.enan.myhstu.ui.CardLayout
+import com.enan.myhstu.ui.CardLayoutCompact
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,24 +44,33 @@ fun AcademicScreenLayout(modifier: Modifier = Modifier,
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Row for Filter Chips
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            ) {
-            CustomFilterChip(
-                label = "Regent Board",
-                onClick = {
-                    viewModel.setWebView(webViewList.regentBoard, navController)
+        Column(
+            verticalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+                .padding(bottom = GRID_SPACING.dp)
+        ) {
+            miscItems.chunked(2).forEach { rowItems ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
+                ) {
+                    rowItems.forEach { item ->
+                        CardLayoutCompact(
+                            item = item,
+                            viewModel = viewModel,
+                            navController = navController,
+                            modifier = Modifier
+                                .weight(1f, fill = true)
+                                .fillMaxWidth()
+                        )
+                    }
+                    if (rowItems.size < 2) {
+                        Spacer(modifier = Modifier.weight(1f, fill = true))
+                    }
                 }
-            )
-            CustomFilterChip(
-                label = "Academic Council",
-                onClick = {
-                    viewModel.setWebView(webViewList.academicCouncil, navController)
-                }
-            )
+            }
         }
-
         Spacer(modifier = Modifier.padding(bottom = GRID_SPACING.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
@@ -74,13 +78,18 @@ fun AcademicScreenLayout(modifier: Modifier = Modifier,
             modifier = Modifier.fillMaxWidth()
                 .padding(bottom = GRID_SPACING.dp)
         ) {
-            academicPageItems.chunked(2).forEach { rowItems ->
+            Text(
+                text = "Academics",
+                style = MaterialTheme.typography.displayMedium,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            academicItems.chunked(2).forEach { rowItems ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(GRID_SPACING.dp),
                 ) {
                     rowItems.forEach { item ->
-                        CardLayout(
+                        CardLayoutCompact(
                             item = item,
                             viewModel = viewModel,
                             navController = navController,

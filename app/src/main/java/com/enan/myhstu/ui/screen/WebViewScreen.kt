@@ -43,6 +43,9 @@ fun WebViewScreenLayout(
                 webView.apply {
                     webViewClient = WebViewClient()
                     settings.javaScriptEnabled = true
+                    settings.setSupportZoom(true)
+                    settings.setBuiltInZoomControls(true)
+                    settings.displayZoomControls = false
                     loadUrl(webViewInfo.url)
                 }
             },
