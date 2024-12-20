@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -65,12 +66,12 @@ fun HomeScreenLayout(viewModel: UiViewModel, navController: NavController, modif
             FilterChip(
                 selected = false,
                 onClick = { navController.navigate(NavBarData.overview.title) },
-                label = { Text("Overview") },
+                label = { Text("Overview of HSTU") },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                 ),
                 border = null,
-                modifier = Modifier.padding(horizontal = 4.dp)
+                modifier = Modifier.padding(4.dp)
             )
         }
 

@@ -8,36 +8,36 @@ import androidx.room.PrimaryKey
 data class TeacherDE(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "t_id", defaultValue = "")
-    var teacherID: Int = 0,
+    var teacherID: Int? = 0,
 
     @ColumnInfo(name = "f_id", defaultValue = "")
-    var facultyID: String = "",
+    var facultyID: String? = "",
 
     @ColumnInfo(name = "d_id", defaultValue = "")
-    var departmentID: String = "",
+    var departmentID: String? = "",
 
     @ColumnInfo(name = "t_name", defaultValue = "")
-    var name: String = "",
+    var name: String? = "",
 
-    @ColumnInfo(name = "desig", defaultValue = "") // Handle extra single quotes
-    var designation: String = "",
+    @ColumnInfo(name = "desig", defaultValue = "")
+    var designation: String? = "",
 
-    @ColumnInfo(name = "mobile", defaultValue = "") // Handle missing length restriction
-    var mobile: String = "",
+    @ColumnInfo(name = "mobile", defaultValue = "")
+    var mobile: String? = "",
 
-    @ColumnInfo(name = "ophone", defaultValue = "") // Handle extra single quotes
-    var ophone: String = "",
+    @ColumnInfo(name = "ophone", defaultValue = "")
+    var ophone: String? = "",
 
-    @ColumnInfo(name = "hphone", defaultValue = "") // Handle extra single quotes
-    var hphone: String = "",
+    @ColumnInfo(name = "hphone", defaultValue = "")
+    var hphone: String? = "",
 
-    @ColumnInfo(name = "email", defaultValue = "") // Handle extra single quotes
-    var email: String = "",
+    @ColumnInfo(name = "email", defaultValue = "")
+    var email: String? = "",
 
-    @ColumnInfo(name = "username", defaultValue = "") // Handle extra single quotes
-    var username: String = "",
+    @ColumnInfo(name = "username", defaultValue = "")
+    var username: String? = "",
 
-    @ColumnInfo(name = "dr", defaultValue = "") // Handle extra single quotes and empty type
-    var dr: String = "",
+    @ColumnInfo(name = "dr", defaultValue = "")
+    var dr: String? = "",
 )
 

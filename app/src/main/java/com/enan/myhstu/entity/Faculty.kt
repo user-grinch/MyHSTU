@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "faculty")
 data class FacultyDE(
-    @ColumnInfo(name = "f_id") @PrimaryKey(autoGenerate = true) val facultyID: Int = 0,
-    @ColumnInfo(name = "f_name") val name: String,
-    @ColumnInfo(name = "f_short") val shortName: String,
+    @ColumnInfo(name = "f_id") @PrimaryKey(autoGenerate = true) var facultyID: Int? = 0,
+    @ColumnInfo(name = "f_name") var name: String? = "",
+    @ColumnInfo(name = "f_short") var shortName: String? = "",
 )

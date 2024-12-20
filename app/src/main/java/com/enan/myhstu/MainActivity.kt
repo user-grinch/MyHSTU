@@ -64,7 +64,7 @@ fun NavHandler(viewModel: UiViewModel = viewModel()) {
                 NavigationLayout(viewModel = viewModel, navController = navController)
             }
         ) { innerPadding ->
-            NavHost(navController = navController, startDestination = NavBarData.academics.title) {
+            NavHost(navController = navController, startDestination = NavBarData.home.title) {
                 composable(NavBarData.home.title) {
                     HomeScreenLayout(
                         modifier = Modifier.padding(innerPadding),

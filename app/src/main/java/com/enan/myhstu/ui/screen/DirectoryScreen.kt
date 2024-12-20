@@ -27,24 +27,48 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.enan.myhstu.NavHandler
+import com.enan.myhstu.dao.DepartmentShortNameWithId
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.SearchData
 import com.enan.myhstu.ui.ProfileCard
+import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
     val searchInfo by viewModel.searchInfo.collectAsState()
     val selectedCategories = searchInfo.selectedCategories
-    val filteredTeachers = viewModel.getFilteredTeacherList()
-    val categories by viewModel.categories.collectAsState()
+    val departmentList by viewModel.departmentList.collectAsState()
+    val teacherList by viewModel.teacherList.collectAsState()
+
+    val filteredTeacherList = remember(departmentList, teacherList, searchInfo.query, selectedCategories) {
+        derivedStateOf {
+            teacherList.filter {
+                val isQueryEmpty = searchInfo.query.isEmpty()
+                val isCatEmpty = selectedCategories.isEmpty()
+                var rtnVal = true
+
+                if (!isCatEmpty) {
+                    rtnVal = (it.departmentID ?: "0").toInt() in selectedCategories
+                }
+
+                if (!isQueryEmpty) {
+                    rtnVal = rtnVal && (searchInfo.query.toLowerCase() in (it.name ?: "").toLowerCase())
+                }
+                rtnVal
+            }
+        }
+    }.value
 
     Box(
         modifier = modifier
@@ -97,13 +121,13 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
                     .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                categories.forEach { category ->
+                departmentList.forEach { category ->
                     FilterChip(
-                        selected = selectedCategories.contains(category),
-                        onClick = { viewModel.toggleCategorySelection(category) },
-                        label = { Text(category) },
+                        selected = selectedCategories.contains(category.id),
+                        onClick = { viewModel.toggleCategorySelection(category.id) },
+                        label = { Text(category.shortName) },
                         border = null,
-                        leadingIcon = if (selectedCategories.contains(category)) {
+                        leadingIcon = if (selectedCategories.contains(category.id)) {
                             { Icon(Icons.Filled.Check, contentDescription = "Selected") }
                         } else null,
                         colors = FilterChipDefaults.filterChipColors(
@@ -121,7 +145,7 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
-                if (filteredTeachers.isEmpty()) {
+                if (filteredTeacherList.isEmpty()) {
                     item {
                         Text(
                             text = "No results found",
@@ -132,8 +156,8 @@ fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier)
                         )
                     }
                 } else {
-                    items(filteredTeachers) { teacher ->
-                        ProfileCard(teacher)
+                    items(filteredTeacherList) { teacher ->
+                        ProfileCard(teacher, viewModel)
                     }
                 }
             }

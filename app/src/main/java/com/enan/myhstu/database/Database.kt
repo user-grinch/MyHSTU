@@ -24,8 +24,9 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, AppDatabase::class.java, "hstu92.sqlite")
-                    .createFromAsset("D:\\GitHub Projects\\MyHSTU\\app\\src\\main\\assets\\database\\")
+                Room.databaseBuilder(context, AppDatabase::class.java, "hstu.sqlite")
+                    .createFromAsset("hstu.sqlite")
+                    .fallbackToDestructiveMigration()
                     .build()
             }
         }
