@@ -38,6 +38,7 @@ fun CustomFilterChip(
     modifier: Modifier = Modifier
 ) {
     FilterChip(
+        border = null,
         selected = isSelected,
         onClick = onClick,
         label = { Text(label) },

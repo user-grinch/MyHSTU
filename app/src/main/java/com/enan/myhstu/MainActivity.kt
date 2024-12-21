@@ -29,6 +29,7 @@ import androidx.room.Database
 import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.database.AppDatabase
 import com.enan.myhstu.ui.screen.AcademicScreenLayout
+import com.enan.myhstu.ui.screen.CGPAScreenLayout
 import com.enan.myhstu.ui.screen.DirectoryScreenLayout
 import com.enan.myhstu.ui.screen.OverviewScreenLayout
 import com.enan.myhstu.ui.screen.SettingScreenLayout
@@ -39,11 +40,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Enable predictive gestures (Swipe Navigation)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            val decorView = window.decorView
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        }
         setContent {
             val appDB = AppDatabase.getDatabase(LocalContext.current)
             val viewModel = UiViewModel(appDB.teacherDao(), appDB.facultyDao(), appDB.departmentDAO())
@@ -115,6 +111,13 @@ fun NavHandler(viewModel: UiViewModel = viewModel(), startDestination: String = 
                 composable(NavBarData.vcview.title) {
                     VCScreenLayout(
                         modifier = Modifier.padding(innerPadding),
+                    )
+                }
+                composable(NavBarData.cgpaCalculatoor.title) {
+                    CGPAScreenLayout(
+                        modifier = Modifier.padding(innerPadding),
+                        viewModel = viewModel,
+                        navController = navController
                     )
                 }
             }

@@ -203,8 +203,13 @@ fun ProfileCard(teacher: TeacherDE,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    var shortName = deptName[0].shortName
+                    if (shortName.length <= 3) {
+                        shortName = "Dept. of " + shortName
+                    }
+
                     Text(
-                        text =  "${deptName[0].shortName}",
+                        text =  shortName,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

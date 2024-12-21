@@ -55,7 +55,7 @@ fun HomeScreenLayout(viewModel: UiViewModel, navController: NavController, modif
             .verticalScroll(state = rememberScrollState()),
     ) {
         Image(
-            painter = painterResource(id = R.mipmap.logo_foreground),
+            painter = painterResource(id = R.drawable.hstu_logo_zoomed),
             contentDescription = "HSTU Logo",
             modifier = Modifier
                 .size(200.dp, 200.dp)

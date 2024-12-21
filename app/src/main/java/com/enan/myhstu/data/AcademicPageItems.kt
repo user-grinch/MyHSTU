@@ -9,8 +9,8 @@ val academicItems = listOf (
     CardItem("Library", R.drawable.library) { viewModel, navController ->
         viewModel.setWebView(webViewList.library, navController)
     },
-    CardItem("Academic routine", R.drawable.routine) { viewModel, navController ->
-        viewModel.setWebView(webViewList.routine, navController)
+    CardItem("CGPA Calculator", R.drawable.calculator) { viewModel, navController ->
+        navController.navigate(NavBarData.cgpaCalculatoor.title)
     },
     CardItem("Exam Result", R.drawable.result) { viewModel, navController ->
         viewModel.setWebView(webViewList.examResult, navController)

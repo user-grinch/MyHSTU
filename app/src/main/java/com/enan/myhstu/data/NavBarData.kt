@@ -28,6 +28,7 @@ object NavBarData {
     val webview = NavBarItem(title = "WebView")
     val overview = NavBarItem(title = "Overview")
     val vcview = NavBarItem(title = "Chancellor & Vice Chancellors")
+    val cgpaCalculatoor = NavBarItem(title = "CGPA Calculator")
 }
 
 val tabBarItemsList = listOf (

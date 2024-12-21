@@ -60,6 +60,7 @@ fun ScrollableChips(
         FilterChip(
             selected = false,
             label = { Text(label) },
+            border = null,
             onClick = {
                 selected?.let { selectionFunc(it) }
             },
@@ -107,7 +108,6 @@ fun ScrollableChips(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DirectoryScreenLayout(viewModel: UiViewModel, modifier: Modifier = Modifier) {
     val searchInfo by viewModel.searchInfo.collectAsState()
