@@ -25,7 +25,7 @@ val vcItems = listOf(
         timeline = "8 April 2002 - 30 August 2006"
     ),
     VCItem(
-        picture = R.drawable.male,
+        picture = R.drawable.default_profile,
         name = "Dr. Md. Motaher Hossain Mondol",
         role = "Professor",
         timeline = "31 August 2006 - 21 April 2007"

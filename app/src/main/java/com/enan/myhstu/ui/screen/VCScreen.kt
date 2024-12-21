@@ -1,5 +1,6 @@
 package com.enan.myhstu.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,20 +20,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enan.myhstu.NavHandler
+import com.enan.myhstu.data.NavBarData
+import com.enan.myhstu.data.NavBarItem
+import com.enan.myhstu.data.UiViewModel
 import com.enan.myhstu.data.VCItem
+import com.enan.myhstu.data.VC_TEACHER_ID
 import com.enan.myhstu.data.presidentItem
 import com.enan.myhstu.data.vcItems
+import com.enan.myhstu.database.AppDatabase
+import com.enan.myhstu.entity.TeacherDE
+import com.enan.myhstu.ui.ProfileCard
 import kotlinx.coroutines.flow.update
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun VCScreenLayout(
     modifier: Modifier = Modifier,
+    viewModel: UiViewModel
 ) {
     Column (
         modifier = modifier
@@ -44,7 +56,8 @@ fun VCScreenLayout(
             style = MaterialTheme.typography.displayMedium
         )
         VCProfileCard(item = presidentItem)
-        VCProfileCard(item = vcItems.last())
+        ProfileCard(teacher = viewModel.vcProfile.value, viewModel = viewModel)
+        ProfileCard(teacher = viewModel.provcProfile.value, viewModel = viewModel)
 
         Spacer(modifier = Modifier.padding(top = 40.dp))
         Text(
@@ -126,6 +139,8 @@ fun VCProfileCard(item: VCItem) {
 
 @Preview(showBackground = true)
 @Composable
-fun Previwe() {
-    NavHandler()
+private fun Preview() {
+    val appDB = AppDatabase.getDatabase(LocalContext.current)
+    val viewModel = UiViewModel(appDB.teacherDao(), appDB.facultyDao(), appDB.departmentDAO())
+    NavHandler(viewModel = viewModel, startDestination = NavBarData.vcview.title)
 }

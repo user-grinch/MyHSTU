@@ -155,7 +155,7 @@ fun ProfileCard(teacher: TeacherDE,
     var resourceID = LocalContext.current.resources.getIdentifier(teacher.username,
         "drawable", LocalContext.current.packageName)
     if (resourceID == 0) {
-        resourceID = R.drawable.male
+        resourceID = R.drawable.default_profile
     }
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -203,7 +203,7 @@ fun ProfileCard(teacher: TeacherDE,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    var shortName = deptName[0].shortName
+                    var shortName = if (deptName.isEmpty()) "" else  deptName[0].shortName
                     if (shortName.length <= 3) {
                         shortName = "Dept. of " + shortName
                     }

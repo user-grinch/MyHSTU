@@ -111,6 +111,7 @@ fun NavHandler(viewModel: UiViewModel = viewModel(), startDestination: String = 
                 composable(NavBarData.vcview.title) {
                     VCScreenLayout(
                         modifier = Modifier.padding(innerPadding),
+                        viewModel = viewModel
                     )
                 }
                 composable(NavBarData.cgpaCalculatoor.title) {

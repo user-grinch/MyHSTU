@@ -8,6 +8,7 @@ import com.enan.myhstu.dao.FacultyDAO
 import com.enan.myhstu.dao.TeacherDAO
 import com.enan.myhstu.entity.TeacherDE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -35,6 +36,12 @@ class UiViewModel(
 
     val departmentList: StateFlow<List<ShortNameWithID>> = departmentDAO.getAllShortNamesWithID()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    val vcProfile: StateFlow<TeacherDE> = teacherDao.getById(VC_TEACHER_ID)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, TeacherDE())
+
+    val provcProfile: StateFlow<TeacherDE> = teacherDao.getById(PRO_VC_TEACHER_ID)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, TeacherDE())
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val filteredDepartmentList: StateFlow<List<ShortNameWithID>> =

@@ -10,6 +10,9 @@ interface TeacherDAO {
     @Query("SELECT * FROM teachers")
     fun getAll(): Flow<List<TeacherDE>>
 
+    @Query("SELECT * FROM teachers WHERE t_id = :tId")
+    fun getById(tId: Int): Flow<TeacherDE>
+
     @Query("SELECT * FROM teachers WHERE f_id IN (:fIds)")
     fun getByFIds(fIds: List<Int>): Flow<List<TeacherDE>>
 

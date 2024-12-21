@@ -55,6 +55,7 @@ fun CGPAScreenLayout(modifier: Modifier = Modifier,
     var creditInputs by remember { mutableStateOf(listOf("")) }
     var result by remember { mutableStateOf("") }
     var mExpanded by remember { mutableStateOf(false) }
+    var expandedIndex by remember { mutableStateOf(-1) }
 
     Box(
         modifier = modifier
@@ -92,27 +93,14 @@ fun CGPAScreenLayout(modifier: Modifier = Modifier,
                                 Icon(
                                     if (mExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                                     null,
-                                    Modifier.clickable { mExpanded = !mExpanded }
+                                    Modifier.clickable {
+                                        mExpanded = !mExpanded
+                                        expandedIndex = if (expandedIndex == index) -1 else index
+                                                       },
                                 )
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         )
-
-                        DropdownMenu(
-                            expanded = mExpanded,
-                            onDismissRequest = { mExpanded = false },
-                            modifier = Modifier.fillMaxWidth(0.4f)
-                        ) {
-                            gpGrades.forEach { it ->
-                                DropdownMenuItem(onClick = {
-                                    gradeInputs = gradeInputs.toMutableList().apply { set(index, it.second.toString()) }
-                                    mExpanded = false
-                                },
-                                text = {
-                                    Text(text = it.first)
-                                })
-                            }
-                        }
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     OutlinedTextField(
@@ -131,6 +119,25 @@ fun CGPAScreenLayout(modifier: Modifier = Modifier,
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+
+        if (expandedIndex != -1) {
+            DropdownMenu(
+                expanded = mExpanded,
+                onDismissRequest = { mExpanded = false },
+                modifier = Modifier.fillMaxWidth(0.4f)
+            ) {
+                gpGrades.forEach { it ->
+                    DropdownMenuItem(onClick = {
+                        gradeInputs = gradeInputs.toMutableList()
+                            .apply { set(expandedIndex, it.second.toString()) }
+                        mExpanded = false
+                    },
+                        text = {
+                            Text(text = it.first)
+                        })
+                }
             }
         }
 
